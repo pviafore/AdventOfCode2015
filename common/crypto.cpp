@@ -48,9 +48,9 @@ namespace crypto {
         auto values = createHashedCircularBuffer(newLineLengths, 64u)->range(0,256);
         std::vector<unsigned int> out;
         for(auto i = 0; i < 16; ++i){
-            auto xorValue = std::accumulate(values.begin()+i*16, values.begin()+i*16+16, 0u, std::bit_xor<unsigned int>());
+            auto xorValue = std::accumulate(values.begin()+i*16, values.begin()+i*16+16, 0u, std::bit_xor<>());
             out.push_back(xorValue);
         }
         return out;
     }
-}
+} // namespace crypto

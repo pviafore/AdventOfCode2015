@@ -5,7 +5,8 @@
 #include <vector>
 
 namespace algo {
-    auto zip(auto container1, auto container2) {
+    template<typename Container1, typename Container2>
+    auto zip(Container1 container1, Container2 container2) {
         auto iter1 = container1.begin();
         auto iter2 = container2.begin();
 
@@ -17,7 +18,8 @@ namespace algo {
         return out;
     }  
 
-    auto find_matching_pairs(auto container, auto filterOperation) {
+    template <typename Container, typename FilterFunction>
+    auto find_matching_pairs(Container container, FilterFunction filterOperation) {
         using ContainerType = typename decltype(container.begin())::value_type; 
         std::vector<std::pair<ContainerType, ContainerType>> out;
         for (auto iter1 = container.begin(); iter1 != container.end(); ++iter1) {
@@ -33,7 +35,8 @@ namespace algo {
         return out;
     }
 
-    auto map(auto container, auto rowOperation) {
+    template <typename Container, typename Function>
+    auto map(const Container& container, Function rowOperation) {
         using ContainerType = typename decltype(container.begin())::value_type; 
         using ReturnType = typename std::invoke_result_t<decltype(rowOperation), ContainerType>;
         std::vector<ReturnType> v;
@@ -41,17 +44,17 @@ namespace algo {
         return v;
     }
 
-    auto range(auto start, auto end) {
-        using RangeType = decltype(start);
-        static_assert(std::is_same<RangeType, decltype(end)>::value, "Start and end must be the same type for range functions");
-        std::vector<RangeType> v;
-        for(RangeType r = start; r < end; ++r) {
-            v.push_back(r);
+    template <typename InputIterator>
+    auto range(InputIterator start, InputIterator end, int step=1) {
+        std::vector<typename InputIterator::value_type> v;
+        for(auto r = start; r < end; r += step) {
+            v.push_back(*r);
         }
         return v;
     }
 
-    auto apply_cyclically(auto &container, auto current, size_t numberOfTimes, auto operation) {
+    template <typename Container, typename InputIterator, typename Function>
+    auto apply_cyclically(Container &container, InputIterator current, size_t numberOfTimes, Function operation) {
         while(numberOfTimes-- != 0) {
             if(current == container.end()) {
                 current = container.begin();
@@ -62,7 +65,8 @@ namespace algo {
         }
     }
 
-    auto erase_if(auto& container, const auto & predicate) {
+    template <typename Container, typename Predicate>
+    auto erase_if(Container& container, const Predicate & predicate) {
         auto it = container.begin();
         while(it!=container.end()) {
             if(predicate(*it)) {
@@ -74,12 +78,23 @@ namespace algo {
         }
     }
 
-    auto getNumericRange(auto start, auto end) {
+    template <typename Number=unsigned int>
+    auto getNumericRange(Number start, Number end) {
         std::vector<int> range;
         for(int i = start; i < end; ++i ){ 
             range.push_back(i);
         }
         return range;
+    }
+
+    template <typename Container>
+    auto enumerate(const Container& container, unsigned int start=0) {
+        using Pair = std::pair<typename Container::value_type, unsigned int>;
+        std::vector<Pair> pairs;
+        for(const auto& v: container) {
+            pairs.emplace_back(v, start++);
+        }
+        return pairs;
     }
 }
 

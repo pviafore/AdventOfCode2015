@@ -23,7 +23,7 @@ namespace input {
         inFile.open(fileName);
 
         std::vector<std::string> v;
-        while(!inFile.eof()) {
+        while(inFile.good() && !inFile.eof()) {
             std::string input;
             getline(inFile, input);
             v.push_back(input);
@@ -31,7 +31,7 @@ namespace input {
         
         return v;
     }
-
+    
     std::vector<std::string> split(const std::string& str){
         std::istringstream iss(str);
         std::vector<std::string> v((std::istream_iterator<std::string>(iss)), std::istream_iterator<std::string>());
@@ -55,7 +55,7 @@ namespace input {
         return out;
     }
 
-    int toNumber(std::string str) {
+    int toNumber(const std::string& str) {
         return std::stoi(str);
     }
 
@@ -71,4 +71,4 @@ namespace input {
         std::copy(v.begin(), v.end(), std::ostream_iterator<std::string>(ss, ""));
         return ss.str();
     }
-}
+} // namespace input
