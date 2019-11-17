@@ -1,6 +1,6 @@
 
 CURDIR = $(shell pwd)
-DOCKER=docker run -it -v $(CURDIR):/root/modern:rw advent-of-code-2017 
+DOCKER=docker run -it -v $(CURDIR):/root/modern:rw advent-of-code-2015 
 CHALLENGE?=1
 CPPFILES = challenges/*.cpp common/*.cpp
 run: static-analysis
@@ -11,10 +11,10 @@ static-analysis: build
 		$(DOCKER) clang-tidy $(CPPFILES) --checks="*,-fuchsia-default-arguments, -fuchsia-overloaded-operator" --warnings-as-errors="*" -- -Icommon -std=c++1z
 
 build:
-		$(DOCKER) g++ -g challenges/challenge$(CHALLENGE).cpp common/*.cpp -Icommon -std=c++17 -o test -Werror -Wall -Wextra -pedantic
+		$(DOCKER) g++ -g challenges/challenge$(CHALLENGE).cpp common/*.cpp -Icommon -std=c++2a -o test -Werror -Wall -Wextra -pedantic
 
 docker:
-		docker build -t advent-of-code-2017 . 
+		docker build -t advent-of-code-2015 . 
 
 shell:
 		$(DOCKER) /bin/bash

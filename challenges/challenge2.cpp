@@ -22,7 +22,7 @@ unsigned int getWrappingPaperNeeded(Dimensions dimensions) {
 
 unsigned int getTotalWrappingPaperNeeded(const std::vector<Dimensions>& boxes) {
     const auto wrappingPaper = algo::map(boxes, getWrappingPaperNeeded);
-    return std::accumulate(wrappingPaper.begin(), wrappingPaper.end(), 0u);
+    return std::accumulate(wrappingPaper.begin(), wrappingPaper.end(), 0U);
 }
 
 unsigned int getRibbonNeeded(Dimensions dimensions) {
@@ -33,7 +33,7 @@ unsigned int getRibbonNeeded(Dimensions dimensions) {
 
 unsigned int getTotalRibbonNeeded(const std::vector<Dimensions>& boxes) {
     const auto ribbons = algo::map(boxes, getRibbonNeeded);
-    return std::accumulate(ribbons.begin(), ribbons.end(), 0u);
+    return std::accumulate(ribbons.begin(), ribbons.end(), 0U);
 }
 
 int main() {

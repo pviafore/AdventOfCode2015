@@ -80,20 +80,21 @@ namespace algo {
 
     template <typename Number=unsigned int>
     auto getNumericRange(Number start, Number end) {
-        std::vector<int> range;
+        std::vector<int> number_range;
         for(int i = start; i < end; ++i ){ 
-            range.push_back(i);
+            number_range.push_back(i);
         }
-        return range;
+        return number_range;
     }
 
     template <typename Container>
     auto enumerate(const Container& container, unsigned int start=0) {
         using Pair = std::pair<typename Container::value_type, unsigned int>;
         std::vector<Pair> pairs;
-        for(const auto& v: container) {
-            pairs.emplace_back(v, start++);
-        }
+        std::transform(container.begin(), container.end(), std::back_inserter(pairs),
+                        [&start](const auto& v){
+            return std::pair{v, start++};
+        });
         return pairs;
     }
 }
