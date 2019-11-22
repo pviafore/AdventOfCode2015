@@ -26,7 +26,9 @@ namespace input {
         while(inFile.good() && !inFile.eof()) {
             std::string input;
             getline(inFile, input);
-            v.push_back(input);
+            if(!input.empty()) {
+                v.push_back(input);
+            }
         }
         
         return v;

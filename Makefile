@@ -16,5 +16,8 @@ build:
 docker:
 		docker build -t advent-of-code-2015 . 
 
+debug:
+		$(DOCKER) gdb ./test
+
 shell:
 		$(DOCKER) /bin/bash
