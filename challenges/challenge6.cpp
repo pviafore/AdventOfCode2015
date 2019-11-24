@@ -11,6 +11,7 @@ enum class Action {
     TURN_OFF
 };
 
+
 using Point = std::pair<unsigned int, unsigned int>;
 
 struct Instruction {
