@@ -97,6 +97,18 @@ namespace algo {
         });
         return pairs;
     }
+
+    template <typename Container>
+    auto groupby(const Container& container){
+        std::vector<std::vector<typename Container::value_type>> grouped;
+        for(const auto &item: container){
+           if(grouped.empty() || (!grouped.rbegin()->empty() &&  *(grouped.rbegin()->rbegin()) != item)) {
+                grouped.push_back(std::vector<typename Container::value_type>());
+           }
+           grouped.rbegin()->push_back(item);
+        }
+        return grouped;
+    }
 }
 
 #endif
